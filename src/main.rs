@@ -9,7 +9,7 @@ mod sequence;
 mod state;
 mod text;
 
-use std::io::{Read, Write};
+use std::io::{IsTerminal, Read, Write};
 use std::process::ExitCode;
 
 const USAGE: &str = "\
@@ -18,7 +18,8 @@ termaid - render mermaid diagrams as text
 Usage: termaid [OPTIONS] [FILE]
 
 Reads mermaid source from FILE (or stdin when FILE is omitted or '-')
-and prints the diagram as Unicode box-drawing text.
+and prints the diagram as Unicode box-drawing text. Run with no FILE
+at a terminal (nothing piped in), it prints this help and exits 2.
 
 Options:
   --md               Treat input as markdown: replace every ```mermaid
@@ -67,6 +68,12 @@ fn main() -> ExitCode {
                 file = Some(s.to_string());
             }
         }
+    }
+
+    // Run plainly at a terminal: show usage instead of waiting on stdin.
+    if file.is_none() && std::io::stdin().is_terminal() {
+        eprint!("{}", USAGE);
+        return ExitCode::from(2);
     }
 
     let mut input = String::new();

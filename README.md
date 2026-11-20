@@ -28,6 +28,8 @@ termaid --max-width N      if wider than N columns, re-lay LR/RL graphs
                            top-down; warn on stderr if still too wide
 ```
 
+- Run with no FILE at a terminal (nothing piped in), it prints the help to
+  stderr and exits 2.
 - Raw mode also accepts input wrapped in a ```` ```mermaid ```` fence.
 - Errors go to stderr with exit code 1. In `--md` mode a block that fails to
   render is left unchanged and a warning is printed.
