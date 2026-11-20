@@ -3,8 +3,11 @@
 Render [mermaid](https://mermaid.js.org) diagrams as Unicode (or ASCII) text in
 the terminal. Single static binary, no dependencies, about 1 ms per call.
 
-```
+```bash
 $ printf 'graph LR\n  A[client] -->|request| B[server]\n' | termaid
+```
+
+```
 ┌────────┐             ┌────────┐
 │ client ├───request──►│ server │
 └────────┘             └────────┘
